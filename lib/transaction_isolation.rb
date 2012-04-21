@@ -1,4 +1,12 @@
 require "active_record"
+# XXX: fix for ruby 1.8.7
+unless Kernel.respond_to?(:require_relative)
+  module Kernel
+    def require_relative(path)
+      require File.join(File.dirname(caller[0]), path.to_str)
+    end
+  end
+end
 require_relative 'transaction_isolation/version'
 
 module TransactionIsolation
